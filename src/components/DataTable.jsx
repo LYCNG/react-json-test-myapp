@@ -13,8 +13,8 @@ export default function DataTable({data,handleDelete}) {
 
     const handleClick=(e)=>{
         var index = e.currentTarget.getAttribute("data-id")
-
     }
+    
     if(!data) return <Loading />
     return (
         <div>

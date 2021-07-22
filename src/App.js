@@ -2,6 +2,7 @@ import React,{ useEffect, useState} from 'react'
 import './App.css';
 import DataTable from "./components/DataTable"
 import Loading from "./components/Loading"
+import Layout from "./components/Layout"
 const url = 'https://test.fs-technology.com/data-100k.json'
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
 
   return (
     <div className="App">
+      <Layout />
           {dataExist ? (
             <>
               <p>Json data read time: {spendTime}</p>
