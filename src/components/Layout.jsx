@@ -1,12 +1,17 @@
 import React from 'react'
 import { Nav,Navbar,Container,NavDropdown } from 'react-bootstrap'
 
-export default function Layout() {
+export default function Layout({time}) {
+
+    const textStyle ={
+        textAlign:"center"
+    }
+    
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="#home">React-Json-Analyze</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
@@ -17,11 +22,9 @@ export default function Layout() {
                 </Nav>
                 <Nav>
                 <NavDropdown title="Export Data" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.1" style={textStyle}>XML</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2" style={textStyle}>CSV</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3" style={textStyle}>JSON</NavDropdown.Item>
                 </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

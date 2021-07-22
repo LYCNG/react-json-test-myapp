@@ -23,9 +23,7 @@ function App() {
 
     const handleDelete=(e)=>{
       var index = e.currentTarget.getAttribute("data-id")
-      
       const rows= [...jsonData]
-      console.log(rows.length)
       rows.splice(index,1)
       setJsonData(rows)
     }
@@ -40,7 +38,7 @@ function App() {
 
   return (
     <div className="App">
-      <Layout />
+      <Layout time={spendTime}/>
           {dataExist ? (
             <>
               <p>Json data read time: {spendTime}</p>

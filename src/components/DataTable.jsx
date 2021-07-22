@@ -14,13 +14,19 @@ export default function DataTable({data,handleDelete}) {
     const handleClick=(e)=>{
         var index = e.currentTarget.getAttribute("data-id")
     }
-    
+
+    const handleEnter=(e)=>{
+        if(e.key==="Enter"){
+            setStep(num)
+        }
+    }
+
     if(!data) return <Loading />
     return (
         <div>
             <Container>
                 <div className="mb-2">
-                <input type="value" name="guild" onChange={(e)=>{setNum(e.target.value)}}/>
+                <input type="value" name="guild" onChange={(e)=>{setNum(e.target.value)}} onKeyPress={handleEnter}/>
                 <Button style={btn1} variant="light" size='sm' onClick={()=>{setStep(num)}}>Search</Button> 
                 </div>
             <Table striped bordered hover size="sm">
