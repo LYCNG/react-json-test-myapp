@@ -2,34 +2,52 @@ import React from 'react'
 import {useState } from 'react'
 import {Table,Container,Button} from 'react-bootstrap'
 import Loading from './Loading'
+import EditPopPage from './EditComponents/EditPopPage'
 export default function DataTable({data,handleDelete}) {
    
     const [step,setStep] = useState(100)
     const [num,setNum] = useState(0)
+    const [show, setShow] = useState(false);
+    const [targetData, setTargetData] = useState({})
 
-    const btn1 ={
-        marginLeft:"10px"
-    }
-
-    const handleClick=(e)=>{
+    const handleEdit=(e)=>{
         var index = e.currentTarget.getAttribute("data-id")
+        const row= [...data][index]
+        setTargetData(row)
+        setShow(true)
+    }
+    const handleEditClose=()=>{
+        setShow(false)
+    }    
+
+    const handleKeyEnter=(e)=>{
+        if(e.key==="Enter"){
+            handleSearch()
+        }
     }
 
-    const handleEnter=(e)=>{
-        if(e.key==="Enter"){
+    const handleSearch=()=>{     
+        if(num>0 && typeof num==="number"){         
             setStep(num)
+        }else{
+            alert("Please Check the Search is Integer and Greater than 0")
+            setStep(100)
+            document.getElementById("stepNum").value=''
         }
     }
 
     if(!data) return <Loading />
     return (
-        <div>
-            <Container>
-                <div className="mb-2">
-                <input type="value" name="guild" onChange={(e)=>{setNum(e.target.value)}} onKeyPress={handleEnter}/>
-                <Button style={btn1} variant="light" size='sm' onClick={()=>{setStep(num)}}>Search</Button> 
-                </div>
-            <Table striped bordered hover size="sm">
+        <Container>
+            <div className="mb-2">
+                <p>顯示資料筆數 ( 預設為100筆 )</p>
+                <input id="stepNum" type="value" name="guild" placeholder="" onChange={(e)=>{setNum(parseInt(e.target.value))}} onKeyPress={handleKeyEnter}/>
+                <Button style={{marginLeft:"10px"}} variant="success" size='sm' onClick={handleSearch}>Search</Button> 
+            </div>
+
+            <EditPopPage show={show} handleEditClose={handleEditClose} data={targetData}/>
+
+            <Table striped bordered hover size="sm" variant="light"> 
                 <thead>
                     <tr>
                         <th>IDX</th>
@@ -42,7 +60,7 @@ export default function DataTable({data,handleDelete}) {
                         <th>button</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={{verticalAlign:"middle"}} >
                     {data.filter((item,key)=>key <= step-1).map((items,key)=>{   
                             return(
                                 <tr key={key}>
@@ -54,8 +72,8 @@ export default function DataTable({data,handleDelete}) {
                                     <td>{items.LCL}</td>
                                     <td>{items.VALUE}</td>
                                     <td>
-                                        <Button data-id={key} variant="primary" onClick={(e)=>{handleClick(e)}}>Edit</Button>
-                                        <Button data-id={key} variant="danger" onClick={(e)=>{handleDelete(e)}}>Delete</Button>
+                                        <Button data-id={key} variant="primary" onClick={(e)=>{handleEdit(e)}}>Edit</Button>
+                                        <Button style={{marginLeft:"1.5%"}} data-id={key} variant="danger" onClick={(e)=>{handleDelete(e)}}>Delete</Button>
                                     </td>
                                 </tr>    
                             )
@@ -63,12 +81,9 @@ export default function DataTable({data,handleDelete}) {
                     } 
 
                 </tbody>
-                </Table>
-            </Container>
-        </div>
+            </Table>
+        </Container>
     )
-
-
 }
 
 
