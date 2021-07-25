@@ -1,24 +1,34 @@
 import React from 'react'
 import {useState } from 'react'
 import {Table,Container,Button} from 'react-bootstrap'
-import Loading from './Loading'
+import Loading from './Loading/Loading'
 import EditPopPage from './EditComponents/EditPopPage'
+
 export default function DataTable({data,handleDelete}) {
    
     const [step,setStep] = useState(100)
     const [num,setNum] = useState(0)
     const [show, setShow] = useState(false);
     const [targetData, setTargetData] = useState({})
+    const [dataID,setDataID] = useState()
 
     const handleEdit=(e)=>{
-        var index = e.currentTarget.getAttribute("data-id")
+        var index = e.target.getAttribute("data-id")
         const row= [...data][index]
         setTargetData(row)
+        setDataID(index)
         setShow(true)
     }
+
     const handleEditClose=()=>{
         setShow(false)
     }    
+
+    const handleSaveEdit=(e)=>{
+        e.preventDefault()
+        data[dataID]=targetData
+        setShow(false)
+    }
 
     const handleKeyEnter=(e)=>{
         if(e.key==="Enter"){
@@ -26,13 +36,13 @@ export default function DataTable({data,handleDelete}) {
         }
     }
 
-    const handleSearch=()=>{     
-        if(num>0 && typeof num==="number"){         
-            setStep(num)
-        }else{
-            alert("Please Check the Search is Integer and Greater than 0")
+    const handleSearch=()=>{   
+        if(num<=0){
+            alert("Please Check the Integer Greater than 0")
             setStep(100)
             document.getElementById("stepNum").value=''
+        }else{
+            setStep(num)
         }
     }
 
@@ -41,11 +51,11 @@ export default function DataTable({data,handleDelete}) {
         <Container>
             <div className="mb-2">
                 <p>顯示資料筆數 ( 預設為100筆 )</p>
-                <input id="stepNum" type="value" name="guild" placeholder="" onChange={(e)=>{setNum(parseInt(e.target.value))}} onKeyPress={handleKeyEnter}/>
+                <input id="stepNum" type="number" name="guild" placeholder="" onChange={(e)=>{setNum(parseInt(e.target.value))}} onKeyPress={handleKeyEnter}/>
                 <Button style={{marginLeft:"10px"}} variant="success" size='sm' onClick={handleSearch}>Search</Button> 
             </div>
 
-            <EditPopPage show={show} handleEditClose={handleEditClose} data={targetData}/>
+            <EditPopPage show={show} handleEditClose={handleEditClose} handleSaveEdit={handleSaveEdit} data={targetData}/>
 
             <Table striped bordered hover size="sm" variant="light"> 
                 <thead>

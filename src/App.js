@@ -1,9 +1,8 @@
 import React,{ useEffect, useState} from 'react'
 import './App.css';
-import DataTable from "./components/DataTable"
-import Loading from "./components/Loading"
-import Layout from "./components/Layout"
+import { DataTable,Layout,ChartPage } from './components';
 import {Container} from "react-bootstrap"
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 
 
 
@@ -12,7 +11,6 @@ const url = 'https://test.fs-technology.com/data-100k.json'
 function App() {
  
     const [jsonData,setJsonData] = useState(null)
-    const [dataExist,setDataExist] = useState(false)
     const [spendTime,setSpendTime] = useState(0)
     const [model, setModel] = useState("Light")
 
@@ -23,8 +21,8 @@ function App() {
         setJsonData(resJsonData);
         var end = new Date().getTime();
         setSpendTime((end-start)/1000)
-        setDataExist(true)
     }
+
 
     const handleDelete=(e)=>{
       var index = e.currentTarget.getAttribute("data-id")
@@ -35,29 +33,30 @@ function App() {
 
     const handleModel=()=>{
       model ==="Light"? setModel("Dark"):setModel("Light")
-  }
+    }
 
     useEffect(()=>{
-      jsonData ? (
-        setDataExist(true)
-      ):(
+      if(!jsonData){
         getUrlToJson()
-      )
-    },[dataExist,jsonData,spendTime]);
+      }
+    },[jsonData,spendTime]);
 
   return (
-    <div className="App" >
-      <Layout time={spendTime} handleModel={handleModel} model={model} />
-      <Container style={{marginTop:"10px"}} >
-          {dataExist ? (
-            <>
-              <DataTable data={jsonData} handleDelete={handleDelete}/>
-            </>
-          ):(
-            <Loading />
-          )}
-      </Container>
-    </div>
+    <Router>
+      <div className="App" >
+        <Layout time={spendTime} handleModel={handleModel} model={model} />
+        <Container style={{marginTop:"10px"}} >
+            <Switch>
+              <Route exact path='/'>
+                <DataTable data={jsonData} handleDelete={handleDelete} />
+              </Route>
+              <Route exact path='/chart'>
+                <ChartPage data={jsonData}/>
+              </Route>
+            </Switch>
+        </Container>
+      </div>
+    </Router>
   );
 }
 

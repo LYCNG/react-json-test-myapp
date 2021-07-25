@@ -1,12 +1,12 @@
 /* eslint-disable array-callback-return */
 
-import React,{useState,useEffect} from 'react'
+import React from 'react'
 import {Form,Row,Col} from 'react-bootstrap'
 
-export default function FormDatas({data}) {
+export default function FormDatas({data,handleOnChange}) {
 
-
-    console.log(Object.keys(data))
+    // `https://pcredivewiki.tw/static/images/unit/icon_unit_${props.data.id}.png`
+    
     return (
         <div>
             <Row className="mb-4">
@@ -21,10 +21,15 @@ export default function FormDatas({data}) {
                             >
                             <Form.Label>{item}</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="number"
                                 name="firstName"
                                 placeholder={data[item]}
+                                onChange={(e)=>{
+                                    handleOnChange(e)
+                                }}
                             />
+                            
+                            
                         </Form.Group>  
                     )
                 })}

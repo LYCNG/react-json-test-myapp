@@ -6,34 +6,15 @@ export default function Layout({time,handleModel,model}) {
         textAlign:"center"
     }
 
-    const DarkStyle ={
-        marginTop:"5%",
-        color:"white"
-    }
-    const LightStyle ={
-        marginTop:"5%",
-        color:"grey"
-    }
-    const checkMode=()=>{
-        switch(model){
-            case "Dark":
-                return DarkStyle
-            case "Light":
-                return LightStyle
-            default:
-                break
-        }
-    }
-
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-            <Navbar.Brand href="#home">React-Json-Analyze</Navbar.Brand>
+            <Navbar.Brand href="/">React Json Analyze</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link>More deets</Nav.Link>
+                    <Nav.Link href="/chart">Chart Mode</Nav.Link>
                     <Nav.Link eventKey={2}>
                         Dank memes
                     </Nav.Link>
@@ -45,7 +26,7 @@ export default function Layout({time,handleModel,model}) {
                 </Nav>
                 <Nav className="me-auto">
                     <Form.Check 
-                        style={checkMode()}
+                        style={{marginTop:"5%"}}
                         type="switch"
                         id="custom-switch"
                         check={model}
