@@ -15,15 +15,16 @@ export default function EditPopPage({data,show,handleEditClose,handleSaveEdit}) 
     return (
         <div>
             <Modal 
+            
                 show={show} 
                 onHide={handleEditClose} 
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
-            <Modal.Header closeButton>
+            <Modal.Header closeButton >
                 <Modal.Title>Data Edit</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body >
             
                 <FormDatas data={data} handleOnChange={handleOnChange} />
 

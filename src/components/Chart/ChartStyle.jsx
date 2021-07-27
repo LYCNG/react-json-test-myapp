@@ -1,28 +1,40 @@
 import React from 'react'
-import Loading from '../Loading/Loading'
-import {ArgumentAxis,ValueAxis,Chart,LineSeries} from '@devexpress/dx-react-chart-bootstrap4';
-import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
+import {Line} from "react-chartjs-2"
 
-const datas = [
-    { argument: 1, value: 10 },
-    { argument: 2, value: 20 },
-    { argument: 3, value: 30 },
-  ];
-  
-export default function ChartStyle() {
 
+export default function ChartStyle({data,dark}) {
+    console.log(dark)
+    const step_data = data.filter((item,key)=>key <= 100-1)
+    const ucl=  step_data.map(item=>item["UCL"])
+    const value =  step_data.map(item=>item["VALUE"])
+    const lcl =  step_data.map(item=>item["LCL"])
+    const Labels =  step_data.map(item=>item["PIECEID"])
+    const line_data={
+        labels: Labels,
+        datasets:[
+            {
+              label: "UCL",
+              data: ucl,
+              fill: false,
+              borderColor: "orange"
+            },
+            {
+              label: "Value",
+              data:  value,
+              fill: false,
+              borderColor: dark?" yellow":"red"
+            },
+            {
+                label: "LCL",
+                data: lcl,
+                fill: false,
+                borderColor: "rgb(75,192,192)"
+              },
+          ],
+    }
     return (
-
-        <div className="card">
-            <Chart
-            data={datas}
-            >
-            <ArgumentAxis />
-            <ValueAxis />
-
-            <LineSeries valueField="value" argumentField="argument" />
-            </Chart>
+        <div>
+            <Line color={"red"} data={line_data}  />
         </div>
-
     )
 }

@@ -4,7 +4,7 @@ import {Table,Container,Button} from 'react-bootstrap'
 import Loading from './Loading/Loading'
 import EditPopPage from './EditComponents/EditPopPage'
 
-export default function DataTable({data,handleDelete}) {
+export default function DataTable({data,handleDelete,dark}) {
    
     const [step,setStep] = useState(100)
     const [num,setNum] = useState(0)
@@ -50,14 +50,14 @@ export default function DataTable({data,handleDelete}) {
     return (
         <Container>
             <div className="mb-2">
-                <p>顯示資料筆數 ( 預設為100筆 )</p>
+                <p style={{color:dark?"white":"black"}}>顯示資料筆數 ( 預設為100筆 )</p>
                 <input id="stepNum" type="number" name="guild" placeholder="" onChange={(e)=>{setNum(parseInt(e.target.value))}} onKeyPress={handleKeyEnter}/>
                 <Button style={{marginLeft:"10px"}} variant="success" size='sm' onClick={handleSearch}>Search</Button> 
             </div>
 
             <EditPopPage show={show} handleEditClose={handleEditClose} handleSaveEdit={handleSaveEdit} data={targetData}/>
 
-            <Table striped bordered hover size="sm" variant="light"> 
+            <Table striped bordered hover size="sm" variant={dark?"dark":"light"}> 
                 <thead>
                     <tr>
                         <th>IDX</th>

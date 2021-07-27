@@ -13,6 +13,7 @@ export default function FormDatas({data,handleOnChange}) {
                 {Object.keys(data).filter((item) => typeof data[item] === 'number').map((item,key)=>{
                     return (
                         <Form.Group
+                        
                             key={key}
                             as={Col}
                             md="3"
@@ -28,8 +29,6 @@ export default function FormDatas({data,handleOnChange}) {
                                     handleOnChange(e)
                                 }}
                             />
-                            
-                            
                         </Form.Group>  
                     )
                 })}
