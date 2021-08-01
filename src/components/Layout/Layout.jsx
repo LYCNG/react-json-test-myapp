@@ -1,11 +1,33 @@
 import React from 'react'
-import { Nav,Navbar,Container,NavDropdown,Form } from 'react-bootstrap'
+import exportFromJSON from 'export-from-json'
+import { Nav,Navbar,Container,NavDropdown } from 'react-bootstrap'
 
-export default function Layout({time,handleModel,dark}) {
+export default function Layout({time,handleModel,dark,data,step}) {
     const textStyle ={
         textAlign:"center"
     }
     
+    const handleDownload=(data_format)=>{
+        const data1 = data.filter((item,key)=>key <= step-1)
+        data1.forEach((item,key) =>item.index=key);
+        var exportType =undefined;
+        switch(data_format){
+            case "csv":
+                exportType =  exportFromJSON.types.csv;
+                break;
+            case "xml":
+                exportType =  exportFromJSON.types.xml;
+                break;
+            case "json":
+                exportType =  exportFromJSON.types.json;
+                break;
+            default:
+                alert("something wrong")
+                break;
+        }
+        exportFromJSON({data:data1, fileName:'data', exportType })
+    }
+
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -20,15 +42,16 @@ export default function Layout({time,handleModel,dark}) {
                     </NavDropdown>
                 </Nav>
                 <Nav className="me-auto">
+
+                </Nav>
+                <Nav className="justify-content-end">
                     <Nav.Link eventKey="disabled" disabled style={{color:"white"}}>
                         Json read time: {time}
                     </Nav.Link>
-                </Nav>
-                <Nav className="me-auto">
-                    <NavDropdown title="Export Data" id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1" style={textStyle}>XML</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2" style={textStyle}>CSV</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3" style={textStyle}>JSON</NavDropdown.Item>
+                    <NavDropdown title="Export Data" id="collasible-nav-dropdown"  >
+                        <NavDropdown.Item onClick={()=>{handleDownload("xml")}} style={textStyle}>XML</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>{handleDownload("csv")}}  style={textStyle}>CSV</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>{handleDownload("json")}}  style={textStyle}>JSON</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

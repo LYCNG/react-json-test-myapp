@@ -3,7 +3,7 @@ import {Line} from "react-chartjs-2"
 
 
 export default function ChartStyle({data,dark}) {
-    console.log(dark)
+
     const step_data = data.filter((item,key)=>key <= 100-1)
     const ucl=  step_data.map(item=>item["UCL"])
     const value =  step_data.map(item=>item["VALUE"])
@@ -16,7 +16,8 @@ export default function ChartStyle({data,dark}) {
               label: "UCL",
               data: ucl,
               fill: false,
-              borderColor: "orange"
+              borderColor: "orange",
+
             },
             {
               label: "Value",
@@ -34,7 +35,12 @@ export default function ChartStyle({data,dark}) {
     }
     return (
         <div>
-            <Line color={"red"} data={line_data}  />
+            <Line 
+                data={line_data} 
+                options ={
+                    {borderCapStyle:"square"}
+                }
+            />
         </div>
     )
 }

@@ -4,9 +4,8 @@ import {Table,Container,Button} from 'react-bootstrap'
 import Loading from './Loading/Loading'
 import EditPopPage from './EditComponents/EditPopPage'
 
-export default function DataTable({data,handleDelete,dark}) {
+export default function DataTable({data,handleDelete,handleSearch,dark,step}) {
    
-    const [step,setStep] = useState(100)
     const [num,setNum] = useState(0)
     const [show, setShow] = useState(false);
     const [targetData, setTargetData] = useState({})
@@ -32,17 +31,7 @@ export default function DataTable({data,handleDelete,dark}) {
 
     const handleKeyEnter=(e)=>{
         if(e.key==="Enter"){
-            handleSearch()
-        }
-    }
-
-    const handleSearch=()=>{   
-        if(num<=0){
-            alert("Please Check the Integer Greater than 0")
-            setStep(100)
-            document.getElementById("stepNum").value=''
-        }else{
-            setStep(num)
+            handleSearch(num)
         }
     }
 
@@ -50,9 +39,9 @@ export default function DataTable({data,handleDelete,dark}) {
     return (
         <Container>
             <div className="mb-2">
-                <p style={{color:dark?"white":"black"}}>顯示資料筆數 ( 預設為100筆 )</p>
+                <p style={{color:dark?"white":"black"}}>顯示資料筆數 ( 預設為100筆 ): {step} </p>
                 <input id="stepNum" type="number" name="guild" placeholder="" onChange={(e)=>{setNum(parseInt(e.target.value))}} onKeyPress={handleKeyEnter}/>
-                <Button style={{marginLeft:"10px"}} variant="success" size='sm' onClick={handleSearch}>Search</Button> 
+                <Button style={{marginLeft:"10px"}} variant="success" size='sm' onClick={()=>handleSearch(num)}>Search</Button> 
             </div>
 
             <EditPopPage show={show} handleEditClose={handleEditClose} handleSaveEdit={handleSaveEdit} data={targetData}/>
