@@ -3,6 +3,7 @@ import './App.css';
 import { DataTable,Layout,ChartPage } from './components';
 import {Container} from "react-bootstrap"
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 
 const url = 'https://test.fs-technology.com/data-100k.json'
 
@@ -59,6 +60,7 @@ function App() {
 
   return (
     <Router>
+      <AmplifySignOut />
       <div className="App" style={themeStyle}>
         <Layout time={spendTime} handleModel={handleModel} dark={dark} data={jsonData} step={step}/>
         <Container style={{marginTop:"10px"}} >
@@ -76,4 +78,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);
