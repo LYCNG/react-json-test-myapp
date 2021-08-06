@@ -1,9 +1,9 @@
 import React,{ useEffect, useState,useMemo} from 'react'
 import './App.css';
-import { DataTable,Layout,ChartPage } from './components';
+import { DataTable,Layout,ChartPage,AntDataTable } from './components';
 import {Container} from "react-bootstrap"
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+// import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 
 const url = 'https://test.fs-technology.com/data-100k.json'
 
@@ -51,6 +51,8 @@ function App() {
       }
     }
 
+    
+
     useEffect(()=>{
       if(!jsonData){
         getUrlToJson()
@@ -60,13 +62,15 @@ function App() {
 
   return (
     <Router>
-      <AmplifySignOut />
       <div className="App" style={themeStyle}>
-        <Layout time={spendTime} handleModel={handleModel} dark={dark} data={jsonData} step={step}/>
+        <Layout time={spendTime} handleModel={handleModel} dark={dark} data={jsonData} step={step} />
         <Container style={{marginTop:"10px"}} >
             <Switch>
               <Route exact path='/'>
                 <DataTable data={jsonData} handleDelete={handleDelete} handleSearch={handleSearch} dark={dark} step={step}/>
+              </Route>
+              <Route exact path='/ant_mode'>
+                <AntDataTable jsonData={jsonData} handleDelete={handleDelete} handleSearch={handleSearch} dark={dark} step={step} />
               </Route>
               <Route exact path='/chart'>
                 <ChartPage data={jsonData} dark={dark} />
@@ -78,4 +82,4 @@ function App() {
   );
 }
 
-export default withAuthenticator(App);
+export default App;

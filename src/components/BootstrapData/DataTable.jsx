@@ -1,8 +1,8 @@
 import React from 'react'
 import {useState } from 'react'
 import {Table,Container,Button} from 'react-bootstrap'
-import Loading from './Loading/Loading'
-import EditPopPage from './EditComponents/EditPopPage'
+import Loading from '../Loading/Loading'
+import EditPopPage from '../EditComponents/EditPopPage'
 
 export default function DataTable({data,handleDelete,handleSearch,dark,step}) {
    

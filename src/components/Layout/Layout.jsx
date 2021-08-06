@@ -36,6 +36,7 @@ export default function Layout({time,handleModel,dark,data,step}) {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
+                    <Nav.Link href="/ant_mode">Ant Design Mode</Nav.Link>
                     <Nav.Link href="/chart">Chart Mode</Nav.Link>
                     <NavDropdown title={dark?"Dark Theme":"Light Theme"} id="collasible-nav-dropdown">
                         <NavDropdown.Item onClick={handleModel}>{dark?"Light Theme":"Dark Theme"}</NavDropdown.Item>
