@@ -17,7 +17,7 @@ function App() {
       return{
         backgroundSize: "cover",
         backgroundColor:dark? "gray":"white",
-        minHeight: '100%',
+        minHeight: "100%",
         marginBottom: '-50px'
       }
     },[dark])
@@ -53,8 +53,6 @@ function App() {
       }
     }
 
-    
-
     useEffect(()=>{
       if(!jsonData){
         getUrlToJson()
@@ -66,7 +64,7 @@ function App() {
     <Router>
       <div className="App" style={themeStyle}>
         <Layout time={spendTime} handleModel={handleModel} dark={dark} data={jsonData} step={step} />
-        <Container style={{paddingBottom: "80px"}} >
+        <Container style={{paddingBottom: "100px"}} >
             <Switch>
               <Route exact path='/'>
                 <DataTable data={jsonData} handleDelete={handleDelete} handleSearch={handleSearch} dark={dark} step={step}/>
@@ -79,8 +77,8 @@ function App() {
               </Route>
             </Switch>
         </Container>
+        {/* <Footer dark={dark}/> */}
       </div>
-      <Footer dark={dark}/>
     </Router>
   );
 }
