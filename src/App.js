@@ -1,6 +1,6 @@
 import React,{ useEffect, useState,useMemo} from 'react'
 import './App.css';
-import { DataTable,Layout,ChartPage,AntDataTable } from './components';
+import { DataTable,Layout,AntDataTable,Footer,AntDataChart } from './components';
 import {Container} from "react-bootstrap"
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 // import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
@@ -16,7 +16,9 @@ function App() {
     const themeStyle=useMemo(()=>{
       return{
         backgroundSize: "cover",
-        backgroundColor:dark? "gray":"white"
+        backgroundColor:dark? "gray":"white",
+        minHeight: '100%',
+        marginBottom: '-50px'
       }
     },[dark])
 
@@ -64,7 +66,7 @@ function App() {
     <Router>
       <div className="App" style={themeStyle}>
         <Layout time={spendTime} handleModel={handleModel} dark={dark} data={jsonData} step={step} />
-        <Container style={{marginTop:"10px"}} >
+        <Container style={{paddingBottom: "80px"}} >
             <Switch>
               <Route exact path='/'>
                 <DataTable data={jsonData} handleDelete={handleDelete} handleSearch={handleSearch} dark={dark} step={step}/>
@@ -73,11 +75,12 @@ function App() {
                 <AntDataTable jsonData={jsonData} handleDelete={handleDelete} handleSearch={handleSearch} dark={dark} step={step} />
               </Route>
               <Route exact path='/chart'>
-                <ChartPage data={jsonData} dark={dark} />
+                <AntDataChart data={jsonData} dark={dark}/>
               </Route>
             </Switch>
         </Container>
       </div>
+      <Footer dark={dark}/>
     </Router>
   );
 }

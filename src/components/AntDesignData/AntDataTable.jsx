@@ -1,45 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useState,useEffect} from 'react'
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
-import AntDataChart from './Echart/AntDataChart'
-
+// import AntDataChart from './Echart/AntDataChart'
 
 const EditableCell = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
+    editing,
+    dataIndex,
+    title,
+    inputType,
+    record,
+    index,
+    children,
+    ...restProps
+    }) => {
+      const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+      return (
+        <td {...restProps}>
+          {editing ? (
+            <Form.Item
+              name={dataIndex}
+              style={{
+                margin: 0,
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: `Please Input ${title}!`,
+                },
+              ]}
+            >
+              {inputNode}
+            </Form.Item>
+          ) : (
+            children
+          )}
+        </td>
+      );
+    };
 
-function AntDataTable({jsonData}) {
+function AntDataTable({jsonData,dark}) {
 
   const [form] = Form.useForm();
   const [data, setData] = useState();
@@ -49,9 +48,6 @@ function AntDataTable({jsonData}) {
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: '',
-      age: '',
-      address: '',
       ...record,
     });
     setEditingKey(record.key);
@@ -163,7 +159,7 @@ function AntDataTable({jsonData}) {
   },[data, jsonData])
 
   return (
-    <div>
+    <div style={{marginTop:"2%"}}>
       <Form form={form} component={false}>
         <Table
           components={{
@@ -180,7 +176,6 @@ function AntDataTable({jsonData}) {
           }}
         />
       </Form>
-      <AntDataChart />
     </div>
   )
 }
