@@ -39,7 +39,9 @@ function AntDataChart({data}) {
                 dataZoom: {
                     yAxisIndex: 'none'
                 },
-                restore: {},
+                restore: {
+                    type: 'restore'
+                },
                 saveAsImage: {}
             }
         },
@@ -93,8 +95,8 @@ function AntDataChart({data}) {
         ]
     };
     useEffect(()=>{
-        if(!chartData){
-            if(data){setChartData(data)}
+        if(!chartData&&data){
+            setChartData(data)
         }
     },[data,chartData]);
 

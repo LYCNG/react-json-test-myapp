@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useState,useEffect} from 'react'
-import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Typography,Modal} from 'antd';
+
 // import AntDataChart from './Echart/AntDataChart'
 
 const EditableCell = ({
@@ -43,7 +44,9 @@ function AntDataTable({jsonData,dark}) {
   const [form] = Form.useForm();
   const [data, setData] = useState();
   const [editingKey, setEditingKey] = useState('');
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalData,setModalData] = useState(null)
+  // const nodeRef = React.useRef(null);
   const isEditing = (record) => record.key === editingKey;
 
   const edit = (record) => {
@@ -86,14 +89,35 @@ function AntDataTable({jsonData,dark}) {
   
   const hoverColor=(index,color)=>{
     var element = document.querySelector(`tr[data-row-key='${index}']`)
-    element.getElementsByTagName('a')[1].style.color=color
+    const tag = element.getElementsByTagName('a')
+    for(let item of tag){
+        if(item.innerHTML === 'Delete'){
+          item.style.color = color
+        }
+    }
   }
+  
+
+  //modal operation functions
+  const showModal = (record) => {
+    setModalData(record)
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
 
   const columns = [
-    {title: "IDX", dataIndex: "IDX", editable: false},
-    {title: "CONTEXID", dataIndex: "CONTEXID", editable: false},
+    // {title: "IDX", dataIndex: "IDX", editable: false},
+    // {title: "CONTEXID", dataIndex: "CONTEXID", editable: false},
     {title: "PIECEID", dataIndex: "PIECEID", editable: false},
-    {title: "TIMETAG", dataIndex: "TIMETAG", editable: false},
+    // {title: "TIMETAG", dataIndex: "TIMETAG", editable: false},
     {title: "UCL", dataIndex: "UCL", editable: true},
     {title: "LCL", dataIndex: "LCL", editable: true},
     {title: "VALUE", dataIndex: "VALUE", editable: true},
@@ -119,6 +143,28 @@ function AntDataTable({jsonData,dark}) {
       },
     },
     {
+      title: 'Detail',
+      dataIndex: 'Detail',
+      render: (_, record) =>{
+        return (
+          <>
+          <a href='#' onClick={() =>showModal(record)}>
+            show detail
+          </a>
+            {
+              isModalVisible?(
+                <Modal title="Detail Form" visible={isModalVisible}  onOk={handleOk} onCancel={handleCancel}>
+                    {Object.keys(modalData).map((item,key)=>(
+                      <p key={key}>{item}: {modalData[item]}</p>
+                    ))}
+                </Modal>
+              ):null
+            }
+          </>
+        )
+      }
+    },
+    {
       title: 'Delete',
       dataIndex: 'Delete',
       render: (_, record) =>
@@ -127,7 +173,7 @@ function AntDataTable({jsonData,dark}) {
             <a onMouseEnter={() => {
                   hoverColor(record.key,"red")
               }} 
-              onMouseLeave={() => hoverColor(record.key,"black")}> Delete</a>
+              onMouseLeave={() => hoverColor(record.key,"black")}>Delete</a>
           </Popconfirm>
         ) : null,
     },
@@ -150,11 +196,9 @@ function AntDataTable({jsonData,dark}) {
     });
     
   useEffect(() => {
-    if(!data){
-      if(jsonData){
+    if(!data && jsonData){
         jsonData.forEach((value, index) => {value.key=index.toString()})
         setData(jsonData)
-      }
     }
   },[data, jsonData])
 

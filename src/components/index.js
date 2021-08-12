@@ -4,4 +4,5 @@ export {default as DataTable} from './BootstrapData/DataTable';
 export {default as ChartPage} from './Chart/ChartPage';
 export {default as AntDataTable} from './AntDesignData/AntDataTable'
 export {default as AntDataChart} from './AntDesignData/Echart/AntDataChart'
+export {default as PieChart} from './AntDesignData/Echart/PieChart';
 
