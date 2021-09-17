@@ -1,6 +1,6 @@
 import React,{ useEffect, useState,useMemo} from 'react'
 import './App.css';
-import { DataTable,Layout,AntDataTable,AntDataChart ,PieChart } from './components';
+import { DataTable,Layout,AntDataTable,AntDataChart  } from './components';
 import {Container} from "react-bootstrap"
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 // import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
@@ -75,8 +75,8 @@ function App() {
               <Route exact path='/chart'>
                 <AntDataChart data={jsonData} dark={dark}/>
               </Route>
-              {/* <Route exact path='/pie'>
-                <PieChart data={jsonData} dark={dark}/>
+              {/* <Route exact path='/form'>
+                <Form />
               </Route> */}
             </Switch>
         </Container>

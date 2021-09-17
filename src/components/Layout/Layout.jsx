@@ -38,7 +38,8 @@ export default function Layout({time,handleModel,dark,data,step}) {
                 <Nav className="me-auto">
                     <Nav.Link href="/ant_mode">Ant Design Mode</Nav.Link>
                     <Nav.Link href="/chart">Line Chart</Nav.Link>
-                    <Nav.Link href="/pie">Pie Chart</Nav.Link>
+                    {/* <Nav.Link href="/form">Form</Nav.Link> */}
+                    {/* <Nav.Link href="/windowing">Win</Nav.Link> */}
                     <NavDropdown title={dark?"Dark Theme":"Light Theme"} id="collasible-nav-dropdown">
                         <NavDropdown.Item onClick={handleModel}>{dark?"Light Theme":"Dark Theme"}</NavDropdown.Item>
                     </NavDropdown>

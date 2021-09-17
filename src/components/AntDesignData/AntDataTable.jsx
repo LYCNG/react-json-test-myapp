@@ -39,7 +39,7 @@ const EditableCell = ({
       );
     };
 
-function AntDataTable({jsonData,dark}) {
+function AntDataTable({jsonData}) {
 
   const [form] = Form.useForm();
   const [data, setData] = useState();
